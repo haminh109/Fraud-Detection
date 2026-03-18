@@ -1,1 +1,1 @@
-# MLOps_Fraud_Detection
+# MLOps Group 5: Fraud Detection
