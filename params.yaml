@@ -1,16 +1,10 @@
 preprocess:
   input_path: data/merged_train_data.csv
-  output_dir: data/processed
-  model_dir: models
   train_ratio: 0.8
   top_k_missing: 80
-  clip_percentile: 0.99
   cat_min_freq: 0.0005
 
 features:
-  train_input_path: data/processed/train_preprocessed.parquet
-  val_input_path: data/processed/val_preprocessed.parquet
-  output_dir: data/featured
   target_col: isFraud
   pca_components: 2
   use_pca: true

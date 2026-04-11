@@ -51,7 +51,6 @@ def evaluate_method(name, X_resampled, y_resampled, X_val, y_val, random_state=4
         "classification_report": cls_report,
     }
 
-
 def save_resampled_data(X_resampled, y_resampled, output_dir: Path, prefix: str):
     """
     Save balanced training data to parquet.

@@ -1,8 +1,8 @@
 stages:
-  preprocess:
-    cmd: python src/preprocess.py --input_path ${preprocess.input_path} --output_dir ${preprocess.output_dir} --model_dir ${preprocess.model_dir} --train_ratio ${preprocess.train_ratio} --top_k_missing ${preprocess.top_k_missing} --clip_percentile ${preprocess.clip_percentile} --cat_min_freq ${preprocess.cat_min_freq}
+  full_pipeline:
+    cmd: python src/pipeline.py
     deps:
-      - src/preprocess.py
+      - src/pipeline.py
       - data/merged_train_data.csv
     params:
       - preprocess.input_path
@@ -11,19 +11,7 @@ stages:
       - preprocess.train_ratio
       - preprocess.top_k_missing
       - preprocess.clip_percentile
-      - preprocess.cat_min_freq
-    outs:
-      - data/processed/train_preprocessed.parquet
-      - data/processed/val_preprocessed.parquet
-      - models/preprocessor_v1.pkl
-
-  feature_engineering:
-    cmd: python src/feature_engineering.py --train_input_path ${features.train_input_path} --val_input_path ${features.val_input_path} --output_dir ${features.output_dir} --pca_components ${features.pca_components} --target_col ${features.target_col}
-    deps:
-      - src/feature_engineering.py
-      - data/processed/train_preprocessed.parquet
-      - data/processed/val_preprocessed.parquet
-    params:
+      - preprocess.cat_min_freq      
       - features.train_input_path
       - features.val_input_path
       - features.output_dir
@@ -33,11 +21,15 @@ stages:
       - features.use_missing_flags
       - features.use_v_features
       - features.use_frequency_encoding
+      - pipeline   
+
     outs:
       - data/featured/X_train.parquet
       - data/featured/y_train.parquet
       - data/featured/X_val.parquet
       - data/featured/y_val.parquet
+      - artifacts/fraud_pipeline.pkl
+      - params.yaml
 
   balance:
     cmd: python src/balancing.py --x_train_path ${balance.x_train_path} --y_train_path ${balance.y_train_path} --x_val_path ${balance.x_val_path} --y_val_path ${balance.y_val_path} --output_dir ${balance.output_dir} --metrics_path ${balance.metrics_path} --sampling_ratio ${balance.sampling_ratio} --save_method ${balance.save_method} --random_state ${balance.random_state}
