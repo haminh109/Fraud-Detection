@@ -7,3 +7,4 @@ Thumbs.db
 .dvc/config.local
 
 /data
+/artifacts
