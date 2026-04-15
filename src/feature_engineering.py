@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import pandas as pd
 import numpy as np
 from sklearn.base import BaseEstimator, TransformerMixin
@@ -158,7 +157,7 @@ class FeaturePruner(BaseEstimator, TransformerMixin):
         logger.info(f"FeaturePruner dropped {len(self.prune_to_drop_)} features. "
                    f"Remaining columns: {dropped.shape[1]}")
         return dropped
-=======
+
 import argparse
 import logging
 from pathlib import Path
@@ -642,4 +641,3 @@ def main():
 
 if __name__ == "__main__":
     main()
->>>>>>> 42deab75f6c745885fdac8dd40c0b20f5075d102
